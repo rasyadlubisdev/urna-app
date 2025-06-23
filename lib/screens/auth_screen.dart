@@ -441,13 +441,13 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                   const SizedBox(height: 24),
                   _buildStatusMessage(),
                   const SizedBox(height: 30),
-                  if (_userCredential != null) _buildCredentialInfo(),
+                  // if (_userCredential != null) _buildCredentialInfo(),
                   const SizedBox(height: 20),
                   _buildFeatureHighlights(),
-                  if (_isRegistered && AppConfig.isDevelopmentMode) ...[
-                    const SizedBox(height: 20),
-                    _buildResetButton(),
-                  ],
+                  // if (_isRegistered && AppConfig.isDevelopmentMode) ...[
+                  //   const SizedBox(height: 20),
+                  //   _buildResetButton(),
+                  // ],
                 ],
               ),
             ),
@@ -541,9 +541,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           ),
           const SizedBox(width: 8),
           Text(
-            AppConfig.isDevelopmentMode
-                ? 'DEVELOPMENT MODE'
-                : 'PRODUCTION MODE',
+            AppConfig.isDevelopmentMode ? 'DEVELOPMENT MODE' : 'BETA MODE',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,

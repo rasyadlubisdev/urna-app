@@ -912,7 +912,7 @@ class _CameraScreenState extends State<CameraScreen>
             _buildTopBar(),
 
             // Status Overlay
-            _buildStatusOverlay(),
+            // _buildStatusOverlay(),
 
             // Detection Progress Indicator
             if (_isDetecting) _buildDetectionProgress(),
@@ -930,7 +930,7 @@ class _CameraScreenState extends State<CameraScreen>
             _buildSessionStatusIndicator(),
 
             // Instructions
-            _buildInstructions(),
+            // _buildInstructions(),
           ],
         ),
       ),
@@ -1140,7 +1140,7 @@ class _CameraScreenState extends State<CameraScreen>
 
   Widget _buildSessionStatusIndicator() {
     return Positioned(
-      bottom: 120,
+      bottom: 20,
       left: 16,
       right: 16,
       child: Container(
@@ -1193,7 +1193,7 @@ class _CameraScreenState extends State<CameraScreen>
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  _hasAudioRecorded ? 'M4A' : 'PENDING',
+                  _hasAudioRecorded ? 'RECORDED' : 'PENDING',
                   style: TextStyle(
                     color: _hasAudioRecorded ? Colors.green : Colors.grey,
                     fontSize: 10,
@@ -1357,7 +1357,7 @@ class _CameraScreenState extends State<CameraScreen>
                 );
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 24),
             // UPDATED: Show recording duration and M4A AAC format
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
