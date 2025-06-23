@@ -6,7 +6,7 @@ import '../models/auth_models.dart';
 import '../utils/app_config.dart';
 
 class ApiService {
-  static const Duration _timeoutDuration = Duration(seconds: 30);
+  static const Duration _timeoutDuration = Duration(seconds: 1000);
 
   // Authentication endpoints (for future use)
   static Future<AuthResponse> registerUser({
