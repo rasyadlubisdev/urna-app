@@ -3,13 +3,13 @@ class AppConfig {
   // Development flags for flexibility
   static const bool isDevelopmentMode = false;
   static const bool isBackendAuthReady =
-      false; // Toggle when backend auth is ready
+      true; // Toggle when backend auth is ready
   static const bool isEmulatorMode = true; // Toggle for emulator vs real device
 
   // Backend configuration
   static const String baseUrl = "https://lifedebugger-urna-backend.hf.space";
   static const String predictEndpoint = "/api/v1/predict";
-  static const String authEndpoint = "/api/v1/auth"; // For future use
+  static const String authEndpoint = "/api/v1"; // For future use
 
   // Turnstile configuration
   static const String turnstileSiteKey =

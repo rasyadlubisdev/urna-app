@@ -188,10 +188,10 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           final authResponse = await ApiService.registerUser(
             passphrase: passphrase,
             turnstileToken: turnstileToken,
-            deviceId: deviceId,
+            // deviceId: deviceId,
           );
 
-          if (authResponse.success) {
+          if (authResponse.status == 'success') {
             isUnique = true;
           } else if (authResponse.message.contains('already exists')) {
             retryCount++;
@@ -305,13 +305,13 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
           turnstileToken: turnstileToken,
         );
 
-        if (!authResponse.success) {
+        if (authResponse.status != 'success') {
           throw Exception(authResponse.message);
         }
 
         // Save session token
-        if (authResponse.sessionToken != null) {
-          await StorageService.saveSessionToken(authResponse.sessionToken!);
+        if (authResponse.data != '') {
+          await StorageService.saveSessionToken(authResponse.data);
         }
       }
 
@@ -639,10 +639,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
             ],
           ),
           const SizedBox(height: 16),
-          _buildInfoRow(
-            'Passphrase',
-            '${_userCredential!.passphrase.substring(0, 15)}...',
-          ),
+          _buildInfoRow('Passphrase', '${_userCredential!.passphrase}...'),
           _buildInfoRow(
             'Device ID',
             _userCredential!.deviceId.substring(0, 20) + '...',

@@ -65,23 +65,23 @@ class UserCredential {
 }
 
 class AuthResponse {
-  final bool success;
+  final String status;
   final String message;
-  final String? sessionToken;
+  final String data;
   final Map<String, dynamic>? metadata;
 
   AuthResponse({
-    required this.success,
+    required this.status,
     required this.message,
-    this.sessionToken,
+    required this.data,
     this.metadata,
   });
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {
     return AuthResponse(
-      success: json['success'] ?? false,
+      status: json['status'] ?? '',
       message: json['message'] ?? '',
-      sessionToken: json['sessionToken'],
+      data: json['data'],
       metadata: json['metadata'],
     );
   }

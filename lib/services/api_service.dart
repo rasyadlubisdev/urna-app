@@ -12,15 +12,15 @@ class ApiService {
   static Future<AuthResponse> registerUser({
     required String passphrase,
     required String turnstileToken,
-    required String deviceId,
+    // required String deviceId,
   }) async {
     if (!AppConfig.isBackendAuthReady) {
       // Simulate successful registration for development
       await Future.delayed(const Duration(seconds: 2));
       return AuthResponse(
-        success: true,
+        status: "error",
         message: 'Registration simulated successfully',
-        sessionToken: 'dev_session_${DateTime.now().millisecondsSinceEpoch}',
+        data: 'dev_session_${DateTime.now().millisecondsSinceEpoch}',
       );
     }
 
@@ -37,37 +37,43 @@ class ApiService {
               'User-Agent': 'URNA-Mobile/1.0',
             },
             body: json.encode({
-              'passphrase': passphrase,
-              'turnstile_token': turnstileToken,
-              'device_id': deviceId,
-              'timestamp': DateTime.now().toIso8601String(),
+              'pass_phrase': passphrase,
+              'turnstile_payload': turnstileToken,
+              // 'device_id': deviceId,
+              // 'timestamp': DateTime.now().toIso8601String(),
             }),
           )
           .timeout(_timeoutDuration);
 
       print('📤 Register request sent to: $url');
       print('📦 Response status: ${response.statusCode}');
+      print('API Passphrase: ${passphrase}');
+      print('API turnstileToken: ${turnstileToken}');
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
+        print('📦 Registration successful: ${responseData}');
         return AuthResponse.fromJson(responseData);
       } else if (response.statusCode == 409) {
         // Passphrase already exists
         return AuthResponse(
-          success: false,
+          status: "error",
           message: 'Passphrase already exists. Please generate a new one.',
+          data: '',
         );
       } else {
         return AuthResponse(
-          success: false,
+          status: "error",
           message: 'Registration failed: HTTP ${response.statusCode}',
+          data: '',
         );
       }
     } catch (e) {
       print('❌ Registration error: $e');
       return AuthResponse(
-        success: false,
+        status: "error",
         message: 'Network error during registration: $e',
+        data: '',
       );
     }
   }
@@ -80,9 +86,9 @@ class ApiService {
       // Simulate successful login for development
       await Future.delayed(const Duration(seconds: 1));
       return AuthResponse(
-        success: true,
+        status: "error",
         message: 'Login simulated successfully',
-        sessionToken: 'dev_session_${DateTime.now().millisecondsSinceEpoch}',
+        data: 'dev_session_${DateTime.now().millisecondsSinceEpoch}',
       );
     }
 
@@ -99,30 +105,34 @@ class ApiService {
               'User-Agent': 'URNA-Mobile/1.0',
             },
             body: json.encode({
-              'passphrase': passphrase,
-              'turnstile_token': turnstileToken,
-              'timestamp': DateTime.now().toIso8601String(),
+              'pass_phrase': passphrase,
+              'turnstile_payload': turnstileToken,
+              // 'timestamp': DateTime.now().toIso8601String(),
             }),
           )
           .timeout(_timeoutDuration);
 
       print('📤 Login request sent to: $url');
       print('📦 Response status: ${response.statusCode}');
+      print('API Passphrase: ${passphrase}');
+      print('API turnstileToken: ${turnstileToken}');
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         return AuthResponse.fromJson(responseData);
       } else {
         return AuthResponse(
-          success: false,
+          status: "error",
           message: 'Login failed: HTTP ${response.statusCode}',
+          data: '',
         );
       }
     } catch (e) {
       print('❌ Login error: $e');
       return AuthResponse(
-        success: false,
+        status: "error",
         message: 'Network error during login: $e',
+        data: '',
       );
     }
   }
